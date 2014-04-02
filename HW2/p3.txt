@@ -1,0 +1,16 @@
+
+A) char *p declares a pointer p. p = "hello world" then assigns to p a pointer to the character array. It is not a string copy, only pointers are involved here and as such, you cannot access p[0]. (Exact problem found in K&R in section 5.5, pg 104)
+
+B) char *p is declared but it isn't actually pointing to anything. So you can't dereference p and assign the value 3 to a pointer that doesn't point to anything. 
+
+C) The last line *(pptr+2) = 'c' is the mistake in this code. Declaring p and then setting the pointer pptr to p's memory address is fine. But trying to set the second index of pptr to 'c' will not work because pptr is a pointer to a char. Memory hasn't been allocated for anything past the char value of p and p isn't an array.
+
+D) Array s is a static char array that has been assigned the value of "Hello". The line, s = "goodbye" will not work. When first declared as "Hello", s forms an array just big enough to hold the sequence of characters and '\0'. Individual characters in array s can be changed but it will always refer to the same storage. "goodbye" would be larger than the char values stored for s, and thus would fail to run. (K&R section 5.5, pg 104)
+
+E) There's one major error here, when jptr gets initialized it need to be initialized with the pointer on the variable. So int* iptr, jptr needs to be int* intro, *jptr. Pointers don't necessarily act like other variables when initializing.
+
+F) This program doesn't work because char *p is never malloc'ed. There needs to be memory allocated to *p if you want to string copy "hello world." Also, something I didn't think about until now, strcpy doesn't automatically allocate memory to the destination of the string copy. I definitely did not know that.
+
+G) This code tries to set fptr's memory address to 1, which is obviously not going to work. You cannot assign any pointer's memory address to an integer value.
+
+H) First, char *f[100] creates 100 f* pointersThis code doesn't work because f[0] is a pointer to f**. You can't update a pointer value with a char. Now, if instead you did f[0][0] = getchar(), that would work because it would assign the getchar value to the first pointer's first index. 
